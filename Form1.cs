@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Calculator
@@ -13,7 +6,12 @@ namespace Calculator
     public partial class Calculator : Form
     {
 
+        bool getFirstValue = false;
         
+        String operation = "";
+
+        double value1 = 0.0;
+        double value2 = 0.0;
 
         public Calculator()
         {
@@ -33,142 +31,139 @@ namespace Calculator
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void button2_Click(object sender, EventArgs e) => numbersDisplay.Text += '.';
 
         private void button3_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            if (numbersDisplay.Text == "0")
-            {
-                numbersDisplay.Text = "";
-                numbersDisplay.Text += "2";
-            } else
-            {
-                numbersDisplay.Text += "2";
-            }
+            getValue("addition");
         }
 
         private void button15_Click(object sender, EventArgs e)
         {
-
+            getValue("multiplication");
         }
 
         private void button12_Click(object sender, EventArgs e)
         {
-
+            getValue("division");
         }
 
         private void button16_Click(object sender, EventArgs e)
         {
-           
+            calculate();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (numbersDisplay.Text == "0")
-            {
-                numbersDisplay.Text = "";
-                numbersDisplay.Text += "1";
-            } else
-            {
-                numbersDisplay.Text += "1";
-            }
+            setCharacterInDisplay(1);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            setCharacterInDisplay(2);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (numbersDisplay.Text == "0")
-            {
-                numbersDisplay.Text = "";
-                numbersDisplay.Text += "3";
-            } else
-            {
-                numbersDisplay.Text += "3";
-            }
+            setCharacterInDisplay(3);
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            if (numbersDisplay.Text == "0")
-            {
-                numbersDisplay.Text = "";
-                numbersDisplay.Text += "4";
-            } else
-            {
-                numbersDisplay.Text += "4";
-            }
+            setCharacterInDisplay(4);
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-            if (numbersDisplay.Text == "0")
-            {
-                numbersDisplay.Text = "";
-                numbersDisplay.Text += "5";
-            } else
-            {
-                numbersDisplay.Text += "5";
-            }
+            setCharacterInDisplay(5);
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-            if (numbersDisplay.Text == "0")
-            {
-                numbersDisplay.Text = "";
-                numbersDisplay.Text += "6";
-            } else
-            {
-                numbersDisplay.Text += "6";
-            }
+            setCharacterInDisplay(6);
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            if (numbersDisplay.Text == "0")
-            {
-                numbersDisplay.Text = "";
-                numbersDisplay.Text += "7";
-            } else
-            {
-                numbersDisplay.Text += "7";
-            }
+            setCharacterInDisplay(7);
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
-            if (numbersDisplay.Text == "0")
-            {
-                numbersDisplay.Text = "";
-                numbersDisplay.Text += "8";
-            } else
-            {
-                numbersDisplay.Text += "8";
-            }
+            setCharacterInDisplay(8);
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
-            if (numbersDisplay.Text == "0")
-            {
-                numbersDisplay.Text = "";
-                numbersDisplay.Text += "9";
-            } else
-            {
-                numbersDisplay.Text += "9";
-            }
+            setCharacterInDisplay(9);
         }
 
         private void button18_Click(object sender, EventArgs e)
         {
             numbersDisplay.Text = "";
+        }
+
+        private void setCharacterInDisplay(int number)
+        {
+            if (numbersDisplay.Text == "0")
+            {
+                numbersDisplay.Text = "";
+                numbersDisplay.Text += number.ToString();
+            }
+            else
+            {
+                numbersDisplay.Text += number.ToString();
+            }
+        }
+
+        private void getValue(string choosedOperationButton)
+        {
+            if (!getFirstValue)
+            {
+                operation = choosedOperationButton;
+
+                value1 = double.Parse(numbersDisplay.Text);
+
+                numbersDisplay.Text = "";
+
+                getFirstValue = true;
+            } else
+            {
+                value2 = double.Parse(numbersDisplay.Text);
+            }
+        }
+
+        private void calculate()
+        {
+            double result = 0.0;
+
+            if (getFirstValue)
+            {
+                value2 = double.Parse(numbersDisplay.Text);
+            }
+
+            if (operation == "multiplication")
+            {
+                result = value1 * value2;
+            } else if (operation == "subtraction")
+            {
+                result = value1 - value2;
+            } else if (operation == "addition")
+            {
+                result = value1 + value2;
+            } else if (operation == "division")
+            {
+                result = value1 / value2;
+            }
+
+            getFirstValue = false;
+
+            numbersDisplay.Text = result.ToString();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            getValue("subtraction");
         }
     }
 }
